@@ -8,13 +8,12 @@ django.setup()
 from datacenter.models import Passcard  # noqa: E402
 
 if __name__ == '__main__':
-    passcard = Passcard.objects.all()[0]
-    print(
-        f'''
-        Данные из одного пропуска:
-        owner_name: {passcard.owner_name}
-        passcode: {passcard.passcode}
-        created_at: {passcard.created_at}
-        is_active: {passcard.is_active}
-        '''
-    )
+    all_passcards = Passcard.objects.all()
+    active_passcards = []
+    for passcard in all_passcards:
+        if passcard.is_active is True:
+            active_passcards.append(passcard)
+    print(f'''
+    Всего пропусков: {len(all_passcards)}
+    Активных пропусков: {len(active_passcards)}
+    ''')
